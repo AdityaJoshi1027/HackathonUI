@@ -1,0 +1,1706 @@
+﻿'use client';
+
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+
+export default function AuthPage() {
+  // State to toggle between login and signup
+  const [isLogin, setIsLogin] = useState(true);
+  
+  // Password visibility states
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
+  const [showSignupPassword, setShowSignupPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
+  // Login form state
+  const [loginData, setLoginData] = useState({
+    email: '',
+    password: '',
+    userType: 'user',
+  });
+  
+  // Signup form state
+  const [signupData, setSignupData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  // Handle login form changes
+  const handleLoginChange = (e) => {
+    const { name, value } = e.target;
+    setLoginData({
+      ...loginData,
+      [name]: value,
+    });
+  };
+
+  // Handle signup form changes
+  const handleSignupChange = (e) => {
+    const { name, value } = e.target;
+    setSignupData({
+      ...signupData,
+      [name]: value,
+    });
+  };
+
+  // Handle login form submission
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    console.log('Login form submitted:', loginData);
+    // Implement your login logic here
+  };
+
+  // Handle signup form submission
+  const handleSignupSubmit = (e) => {
+    e.preventDefault();
+    console.log('Signup form submitted:', signupData);
+    // Implement your signup logic here
+  };
+
+  // Animation variants for form container
+  const formVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { 
+      opacity: 1, 
+      x: 0, 
+      transition: { 
+        type: "spring",
+        stiffness: 100,
+        damping: 12,
+        duration: 0.5 
+      } 
+    },
+  };
+
+  // Animation variants for the illustration
+  const illustrationVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      transition: { 
+        type: "spring",
+        stiffness: 80,
+        duration: 0.7,
+        delay: 0.3
+      } 
+    },
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col md:flex-row bg-white overflow-hidden">
+      {/* Left side - Enhanced Form Section */}
+      <motion.div 
+        className="w-full md:w-1/2 flex items-center justify-center p-8 bg-gradient-to-br from-gray-50 via-white to-blue-50 relative overflow-hidden"
+        initial="hidden"
+        animate="visible"
+        variants={formVariants}
+      >
+        {/* Animated Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#3B82F6" strokeWidth="1"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+          </svg>
+        </div>
+
+        {/* Floating Elements */}
+        <motion.div 
+          className="absolute top-10 right-10 w-20 h-20 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 opacity-10"
+          animate={{
+            y: [-10, 10, -10],
+            rotate: [0, 180, 360],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-20 left-8 w-16 h-16 rounded-full bg-gradient-to-r from-green-400 to-blue-500 opacity-10"
+          animate={{
+            y: [10, -10, 10],
+            rotate: [360, 180, 0],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+        />
+
+        <div className="w-full max-w-md z-10 relative">
+          {/* Header Section */}
+          <motion.div 
+            className="text-center mb-10"
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <motion.div 
+              className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl mb-4 shadow-lg"
+              whileHover={{ 
+                scale: 1.1,
+                rotate: 5,
+                boxShadow: "0 20px 40px rgba(59, 130, 246, 0.3)"
+              }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </motion.div>
+            
+            <motion.h1 
+              className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent mb-2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+            >
+              Civic Resolve
+            </motion.h1>
+            
+            <motion.p 
+              className="text-gray-600 text-lg font-medium"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+            >
+              Building Better Communities Together
+            </motion.p>
+            
+            <motion.div 
+              className="flex justify-center mt-4 space-x-2"
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.8, type: "spring", stiffness: 200 }}
+            >
+              {[...Array(3)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"
+                  animate={{
+                    scale: [1, 1.5, 1],
+                    opacity: [0.5, 1, 0.5],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: i * 0.3,
+                  }}
+                />
+              ))}
+            </motion.div>
+          </motion.div>
+
+          {/* Enhanced Toggle Buttons */}
+          <motion.div 
+            className="flex mb-8 bg-white rounded-2xl p-1.5 shadow-xl border border-gray-200"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            whileHover={{ 
+              boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)",
+              scale: 1.02
+            }}
+          >
+            <motion.button
+              className={`relative w-1/2 py-3 text-sm font-semibold rounded-xl transition-all duration-500 overflow-hidden ${
+                isLogin
+                  ? 'text-white'
+                  : 'text-gray-600 hover:text-blue-600'
+              }`}
+              onClick={() => setIsLogin(true)}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              {isLogin && (
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl shadow-lg"
+                  layoutId="activeTab"
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                />
+              )}
+              <span className="relative z-10 flex items-center justify-center">
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                </svg>
+                Sign In
+              </span>
+            </motion.button>
+            
+            <motion.button
+              className={`relative w-1/2 py-3 text-sm font-semibold rounded-xl transition-all duration-500 overflow-hidden ${
+                !isLogin
+                  ? 'text-white'
+                  : 'text-gray-600 hover:text-blue-600'
+              }`}
+              onClick={() => setIsLogin(false)}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              {!isLogin && (
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl shadow-lg"
+                  layoutId="activeTab"
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                />
+              )}
+              <span className="relative z-10 flex items-center justify-center">
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                </svg>
+                Sign Up
+              </span>
+            </motion.button>
+          </motion.div>
+
+          {/* Form Container */}
+          <motion.div
+            className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-2xl border border-white/50"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            whileHover={{ 
+              boxShadow: "0 25px 50px rgba(0, 0, 0, 0.1)",
+              y: -2
+            }}
+          >
+            {/* Login Form */}
+            {isLogin && (
+              <motion.form 
+                onSubmit={handleLoginSubmit} 
+                className="space-y-6"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.3 }}
+              >
+                <motion.div 
+                  className="text-center mb-6"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                >
+                  <h3 className="text-2xl font-bold text-gray-800 mb-2">Welcome Back!</h3>
+                  <p className="text-gray-600">Sign in to access your civic dashboard</p>
+                </motion.div>
+
+                {/* Email Field */}
+                <motion.div 
+                  className="group"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Email Address
+                  </label>
+                  <div className="relative">
+                    <motion.div 
+                      className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <svg className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                      </svg>
+                    </motion.div>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      value={loginData.email}
+                      onChange={handleLoginChange}
+                      className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white text-gray-900 placeholder-gray-500 hover:border-gray-300"
+                      placeholder="Enter your email"
+                    />
+                  </div>
+                </motion.div>
+
+                {/* Password Field */}
+                <motion.div 
+                  className="group"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Password
+                  </label>
+                  <div className="relative">
+                    <motion.div 
+                      className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <svg className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                    </motion.div>
+                    <input
+                      type={showLoginPassword ? "text" : "password"}
+                      name="password"
+                      required
+                      value={loginData.password}
+                      onChange={handleLoginChange}
+                      className="w-full pl-10 pr-12 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white text-gray-900 placeholder-gray-500 hover:border-gray-300"
+                      placeholder="Enter your password"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowLoginPassword(!showLoginPassword)}
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      {showLoginPassword ? (
+                        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
+                        </svg>
+                      ) : (
+                        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
+                </motion.div>
+
+                {/* User Type Selection */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                >
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    Account Type
+                  </label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {[
+                      { value: 'user', label: 'Citizen', icon: '👤' },
+                      { value: 'admin', label: 'Admin', icon: '⚡' }
+                    ].map((type) => (
+                      <motion.label
+                        key={type.value}
+                        className={`relative flex items-center p-3 rounded-xl border-2 cursor-pointer transition-all ${
+                          loginData.userType === type.value
+                            ? 'border-blue-500 bg-blue-50 text-blue-700'
+                            : 'border-gray-200 bg-white hover:border-gray-300'
+                        }`}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <input
+                          type="radio"
+                          name="userType"
+                          value={type.value}
+                          checked={loginData.userType === type.value}
+                          onChange={handleLoginChange}
+                          className="sr-only"
+                        />
+                        <span className="text-lg mr-2">{type.icon}</span>
+                        <span className="font-medium">{type.label}</span>
+                        {loginData.userType === type.value && (
+                          <motion.div
+                            className="absolute inset-0 border-2 border-blue-500 rounded-xl"
+                            layoutId="selectedType"
+                            transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                          />
+                        )}
+                      </motion.label>
+                    ))}
+                  </div>
+                </motion.div>
+
+                {/* Remember & Forgot */}
+                <motion.div 
+                  className="flex items-center justify-between"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                >
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    />
+                    <span className="ml-2 text-sm text-gray-600">Remember me</span>
+                  </label>
+                  <Link href="#" className="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors">
+                    Forgot password?
+                  </Link>
+                </motion.div>
+
+                {/* Submit Button */}
+                <motion.button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <span className="flex items-center justify-center">
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                    </svg>
+                    Sign In to Dashboard
+                  </span>
+                </motion.button>
+              </motion.form>
+            )}
+
+            {/* Signup Form */}
+            {!isLogin && (
+              <motion.form 
+                onSubmit={handleSignupSubmit} 
+                className="space-y-5"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                <motion.div 
+                  className="text-center mb-6"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                >
+                  <h3 className="text-2xl font-bold text-gray-800 mb-2">Join Us Today!</h3>
+                  <p className="text-gray-600">Create your account and start making a difference</p>
+                </motion.div>
+
+                {/* Name Field */}
+                <motion.div 
+                  className="group"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Full Name
+                  </label>
+                  <div className="relative">
+                    <motion.div 
+                      className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <svg className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                    </motion.div>
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      value={signupData.name}
+                      onChange={handleSignupChange}
+                      className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white text-gray-900 placeholder-gray-500 hover:border-gray-300"
+                      placeholder="Enter your full name"
+                    />
+                  </div>
+                </motion.div>
+
+                {/* Email Field */}
+                <motion.div 
+                  className="group"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Email Address
+                  </label>
+                  <div className="relative">
+                    <motion.div 
+                      className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <svg className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                      </svg>
+                    </motion.div>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      value={signupData.email}
+                      onChange={handleSignupChange}
+                      className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white text-gray-900 placeholder-gray-500 hover:border-gray-300"
+                      placeholder="Enter your email"
+                    />
+                  </div>
+                </motion.div>
+
+                {/* Password Fields */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <motion.div 
+                    className="group"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Password
+                    </label>
+                    <div className="relative">
+                      <motion.div 
+                        className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                        whileHover={{ scale: 1.1 }}
+                      >
+                        <svg className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                      </motion.div>
+                      <input
+                        type={showSignupPassword ? "text" : "password"}
+                        name="password"
+                        required
+                        value={signupData.password}
+                        onChange={handleSignupChange}
+                        className="w-full pl-10 pr-12 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white text-gray-900 placeholder-gray-500 hover:border-gray-300"
+                        placeholder="Password"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowSignupPassword(!showSignupPassword)}
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
+                      >
+                        {showSignupPassword ? (
+                          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
+                          </svg>
+                        ) : (
+                          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                          </svg>
+                        )}
+                      </button>
+                    </div>
+                  </motion.div>
+
+                  <motion.div 
+                    className="group"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Confirm
+                    </label>
+                    <div className="relative">
+                      <motion.div 
+                        className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                        whileHover={{ scale: 1.1 }}
+                      >
+                        <svg className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                      </motion.div>
+                      <input
+                        type={showConfirmPassword ? "text" : "password"}
+                        name="confirmPassword"
+                        required
+                        value={signupData.confirmPassword}
+                        onChange={handleSignupChange}
+                        className="w-full pl-10 pr-12 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white text-gray-900 placeholder-gray-500 hover:border-gray-300"
+                        placeholder="Confirm"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
+                      >
+                        {showConfirmPassword ? (
+                          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
+                          </svg>
+                        ) : (
+                          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                          </svg>
+                        )}
+                      </button>
+                    </div>
+                  </motion.div>
+                </div>
+
+                {/* Terms Agreement */}
+                <motion.div 
+                  className="flex items-start"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6 }}
+                >
+                  <input
+                    type="checkbox"
+                    required
+                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded mt-1"
+                  />
+                  <span className="ml-2 text-sm text-gray-600">
+                    I agree to the{' '}
+                    <Link href="#" className="text-blue-600 hover:text-blue-800 font-medium transition-colors">
+                      Terms of Service
+                    </Link>{' '}
+                    and{' '}
+                    <Link href="#" className="text-blue-600 hover:text-blue-800 font-medium transition-colors">
+                      Privacy Policy
+                    </Link>
+                  </span>
+                </motion.div>
+
+                {/* Submit Button */}
+                <motion.button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <span className="flex items-center justify-center">
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                    </svg>
+                    Create Your Account
+                  </span>
+                </motion.button>
+              </motion.form>
+            )}
+          </motion.div>
+
+          {/* Trust Indicators */}
+          <motion.div 
+            className="flex justify-center items-center mt-6 space-x-6 text-gray-500"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+          >
+            {[
+              { icon: '🔒', text: 'Secure' },
+              { icon: '⚡', text: 'Fast' },
+              { icon: '🛡️', text: 'Protected' }
+            ].map((item, index) => (
+              <motion.div 
+                key={index}
+                className="flex items-center text-sm"
+                whileHover={{ scale: 1.05, color: '#3B82F6' }}
+              >
+                <span className="mr-1">{item.icon}</span>
+                <span>{item.text}</span>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </motion.div>
+
+      {/* Right side - Enhanced Civic Illustration */}
+      <motion.div 
+        className="w-full md:w-1/2 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 flex items-center justify-center p-8 relative overflow-hidden"
+        initial="hidden"
+        animate="visible"
+        variants={illustrationVariants}
+      >
+        {/* Animated Background Particles */}
+        <div className="absolute inset-0">
+          {[...Array(15)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-white rounded-full opacity-30"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [-10, -60, -10],
+                opacity: [0.1, 0.6, 0.1],
+                scale: [0.8, 1.2, 0.8],
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Background decorative elements with animation */}
+        <motion.div 
+          className="absolute top-10 right-10 w-24 h-24 rounded-full bg-white opacity-10"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.1, 0.3, 0.1],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-20 left-10 w-16 h-16 rounded-full bg-white opacity-10"
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.1, 0.25, 0.1],
+          }}
+          transition={{
+            duration: 2.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+        />
+        <motion.div 
+          className="absolute top-1/3 left-1/4 w-12 h-12 rounded-full bg-white opacity-10"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.1, 0.2, 0.1],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 0.5
+          }}
+        />
+
+        <div className="w-full max-w-md z-10 relative flex flex-col justify-start items-center h-full py-24 pt-84">
+          {/* Equidistant Random Pattern Above Text */}
+          
+          
+          {/* Single Large Scrolling Text */}
+          <div className="absolute top-20 left-0 w-full overflow-hidden z-20 h-24 flex items-center">
+            <motion.div
+              className="text-white/90 text-5xl font-bold whitespace-nowrap leading-tight"
+              initial={{ x: "100%" }}
+              animate={{ x: "-100%" }}
+              transition={{
+                duration: 18,
+                repeat: Infinity,
+                ease: "linear",
+                delay: 0
+              }}
+            >
+              See. Report. Track. Solved. • See. Report. Track. Solved. • See. Report. Track. Solved. •
+            </motion.div>
+          </div>
+
+          {/* Subtle Ambient Lines */}
+          <motion.svg 
+            className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.08 }}
+            transition={{ duration: 2 }}
+          >
+            <motion.path
+              d="M60,40 Q220,30 380,45"
+              stroke="rgba(255,255,255,0.15)"
+              strokeWidth="1"
+              fill="none"
+              strokeDasharray="4,8"
+              animate={{
+                strokeDashoffset: [0, -12, 0]
+              }}
+              transition={{
+                duration: 12,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+            <motion.path
+              d="M40,100 Q200,80 360,110"
+              stroke="rgba(255,255,255,0.12)"
+              strokeWidth="1"
+              fill="none"
+              strokeDasharray="6,12"
+              animate={{
+                strokeDashoffset: [0, -18, 0]
+              }}
+              transition={{
+                duration: 15,
+                repeat: Infinity,
+                ease: "linear",
+                delay: 3
+              }}
+            />
+          </motion.svg>
+
+          {/* Stable Floating Particles */}
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1.5 h-1.5 bg-white/25 rounded-full"
+              style={{
+                left: `${15 + i * 11}%`,
+                top: `${10 + (i % 3) * 12}%`,
+              }}
+              animate={{
+                y: [0, -10, 0],
+                opacity: [0.4, 0.7, 0.4],
+              }}
+              transition={{
+                duration: 4 + i * 0.3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.6
+              }}
+            />
+          ))}
+
+          {/* Subtle Ambient Lines */}
+          <motion.svg 
+            className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.1 }}
+            transition={{ duration: 2 }}
+          >
+            <motion.path
+              d="M50,30 Q200,40 350,35"
+              stroke="rgba(255,255,255,0.2)"
+              strokeWidth="1"
+              fill="none"
+              strokeDasharray="4,8"
+              animate={{
+                strokeDashoffset: [0, -12, 0]
+              }}
+              transition={{
+                duration: 12,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+            <motion.path
+              d="M80,80 Q250,60 400,90"
+              stroke="rgba(255,255,255,0.15)"
+              strokeWidth="1"
+              fill="none"
+              strokeDasharray="6,12"
+              animate={{
+                strokeDashoffset: [0, -18, 0]
+              }}
+              transition={{
+                duration: 15,
+                repeat: Infinity,
+                ease: "linear",
+                delay: 3
+              }}
+            />
+          </motion.svg>
+
+          {/* Stable Floating Particles */}
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-white/20 rounded-full"
+              style={{
+                left: `${12 + i * 15}%`,
+                top: `${15 + (i % 2) * 20}%`,
+              }}
+              animate={{
+                y: [0, -12, 0],
+                opacity: [0.4, 0.8, 0.4],
+              }}
+              transition={{
+                duration: 5 + i * 0.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.8
+              }}
+            />
+          ))}
+
+          {/* Subtle Connecting Lines */}
+          <motion.svg 
+            className="absolute top-0 left-0 w-full h-40 pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.1 }}
+            transition={{ delay: 2.5 }}
+          >
+            <motion.path
+              d="M50,30 Q150,20 250,35"
+              stroke="rgba(255,255,255,0.15)"
+              strokeWidth="1"
+              fill="none"
+              strokeDasharray="2,4"
+              animate={{
+                strokeDashoffset: [0, -6, 0]
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+            <motion.path
+              d="M80,60 Q180,50 280,70"
+              stroke="rgba(255,255,255,0.1)"
+              strokeWidth="1"
+              fill="none"
+              strokeDasharray="3,6"
+              animate={{
+                strokeDashoffset: [0, -9, 0]
+              }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                ease: "linear",
+                delay: 2
+              }}
+            />
+          </motion.svg>
+
+          {/* Floating Particles */}
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-white/25 rounded-full"
+              style={{
+                left: `${20 + Math.random() * 60}%`,
+                top: `${10 + Math.random() * 25}%`,
+              }}
+              animate={{
+                y: [0, -15, 0],
+                opacity: [0.2, 0.6, 0.2],
+                scale: [0.5, 1, 0.5],
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: Math.random() * 2
+              }}
+            />
+          ))}
+
+          {/* Enhanced Network Connection Lines */}
+          <motion.svg 
+            className="absolute top-2 left-16 w-40 h-24"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.4 }}
+            transition={{ delay: 1 }}
+          >
+            <motion.path
+              d="M10,10 Q60,5 120,20"
+              stroke="rgba(255,255,255,0.25)"
+              strokeWidth="2"
+              fill="none"
+              strokeDasharray="6,6"
+              animate={{
+                strokeDashoffset: [0, -12, 0]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+            <motion.path
+              d="M20,15 Q80,8 140,25"
+              stroke="rgba(255,255,255,0.15)"
+              strokeWidth="1"
+              fill="none"
+              strokeDasharray="4,4"
+              animate={{
+                strokeDashoffset: [0, -8, 0]
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "linear",
+                delay: 1
+              }}
+            />
+          </motion.svg>
+
+          <motion.svg 
+            className="absolute top-8 right-12 w-32 h-20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.35 }}
+            transition={{ delay: 1.5 }}
+          >
+            <motion.path
+              d="M5,5 Q40,15 80,10"
+              stroke="rgba(255,255,255,0.2)"
+              strokeWidth="2"
+              fill="none"
+              strokeDasharray="5,5"
+              animate={{
+                strokeDashoffset: [0, -10, 0]
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "linear",
+                delay: 0.8
+              }}
+            />
+          </motion.svg>
+
+          {/* Enhanced Decorative Lines */}
+          <motion.div 
+            className="absolute top-28 left-4 w-20 h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-full"
+            animate={{ 
+              scaleX: [0.5, 1.2, 0.5],
+              opacity: [0.3, 0.9, 0.3]
+            }}
+            transition={{ 
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          <motion.div 
+            className="absolute top-32 right-6 w-24 h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-full"
+            animate={{ 
+              scaleX: [0.3, 1.3, 0.3],
+              opacity: [0.2, 0.8, 0.2]
+            }}
+            transition={{ 
+              duration: 3.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1
+            }}
+          />
+
+          {/* More Complex Geometric Shapes */}
+          <motion.div 
+            className="absolute top-18 right-20 w-12 h-12 border-2 border-white/15 rounded-2xl"
+            animate={{ 
+              rotate: [0, 120, 0],
+              scale: [1, 0.8, 1]
+            }}
+            transition={{ 
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          <motion.div 
+            className="absolute top-24 left-8 w-10 h-10 border-2 border-white/15 rounded-full"
+            animate={{ 
+              scale: [1, 1.4, 1],
+              opacity: [0.2, 0.7, 0.2]
+            }}
+            transition={{ 
+              duration: 4.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 0.8
+            }}
+          />
+
+          {/* Additional Complex Shapes */}
+          <motion.div 
+            className="absolute top-2 left-2/3 w-6 h-6 bg-white/8 transform rotate-45 rounded-sm"
+            animate={{ 
+              rotate: [45, 270, 45],
+              scale: [1, 1.4, 1]
+            }}
+            transition={{ 
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2
+            }}
+          />
+
+          <motion.div 
+            className="absolute top-22 left-2 w-4 h-16 bg-gradient-to-b from-white/15 to-transparent rounded-full"
+            animate={{ 
+              scaleY: [0.5, 1.2, 0.5],
+              opacity: [0.3, 0.8, 0.3]
+            }}
+            transition={{ 
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1.5
+            }}
+          />
+
+          <motion.div 
+            className="absolute top-4 right-2 w-16 h-4 bg-gradient-to-r from-white/15 to-transparent rounded-full"
+            animate={{ 
+              scaleX: [0.4, 1.3, 0.4],
+              opacity: [0.2, 0.7, 0.2]
+            }}
+            transition={{ 
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 0.7
+            }}
+          />
+
+          {/* Enhanced Particle Effects */}
+          {[...Array(12)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-white/40 rounded-full"
+              style={{
+                left: `${15 + (i * 8)}%`,
+                top: `${6 + Math.sin(i) * 12}%`,
+              }}
+              animate={{
+                y: [0, -25, 0],
+                opacity: [0.3, 1, 0.3],
+                scale: [0.5, 1.2, 0.5],
+              }}
+              transition={{
+                duration: 2 + i * 0.3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.3
+              }}
+            />
+          ))}
+
+          {/* Orbital Elements */}
+          <motion.div 
+            className="absolute top-10 left-1/2 transform -translate-x-1/2"
+            animate={{ rotate: [0, 360] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          >
+            <div className="relative w-24 h-24">
+              <motion.div 
+                className="absolute top-0 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-white/30 rounded-full"
+                animate={{ scale: [1, 1.5, 1] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </div>
+          </motion.div>
+
+          {/* Network Connection Lines */}
+          <motion.svg 
+            className="absolute top-6 left-20 w-32 h-20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.3 }}
+            transition={{ delay: 1 }}
+          >
+            <motion.path
+              d="M10,10 Q50,5 90,15"
+              stroke="rgba(255,255,255,0.2)"
+              strokeWidth="1"
+              fill="none"
+              strokeDasharray="4,4"
+              animate={{
+                strokeDashoffset: [0, -8, 0]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+          </motion.svg>
+
+          <motion.svg 
+            className="absolute top-10 right-16 w-24 h-16"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.25 }}
+            transition={{ delay: 1.5 }}
+          >
+            <motion.path
+              d="M5,5 Q30,12 50,8"
+              stroke="rgba(255,255,255,0.15)"
+              strokeWidth="1"
+              fill="none"
+              strokeDasharray="3,3"
+              animate={{
+                strokeDashoffset: [0, -6, 0]
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "linear",
+                delay: 0.8
+              }}
+            />
+          </motion.svg>
+
+          {/* Decorative Lines */}
+          <motion.div 
+            className="absolute top-32 left-8 w-16 h-0.5 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+            animate={{ 
+              scaleX: [0.5, 1, 0.5],
+              opacity: [0.3, 0.8, 0.3]
+            }}
+            transition={{ 
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          <motion.div 
+            className="absolute top-36 right-8 w-20 h-0.5 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+            animate={{ 
+              scaleX: [0.3, 1, 0.3],
+              opacity: [0.2, 0.7, 0.2]
+            }}
+            transition={{ 
+              duration: 3.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1
+            }}
+          />
+
+          {/* Additional Geometric Shapes */}
+          <motion.div 
+            className="absolute top-20 right-16 w-8 h-8 border border-white/10 rounded-lg"
+            animate={{ 
+              rotate: [0, 90, 0],
+              scale: [1, 0.8, 1]
+            }}
+            transition={{ 
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          <motion.div 
+            className="absolute top-28 left-12 w-6 h-6 border border-white/10 rounded-full"
+            animate={{ 
+              scale: [1, 1.3, 1],
+              opacity: [0.2, 0.6, 0.2]
+            }}
+            transition={{ 
+              duration: 4.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 0.8
+            }}
+          />
+
+          {/* More Complex Shapes */}
+          <motion.div 
+            className="absolute top-4 left-1/3 w-4 h-4 bg-white/5 transform rotate-45"
+            animate={{ 
+              rotate: [45, 225, 45],
+              scale: [1, 1.2, 1]
+            }}
+            transition={{ 
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2
+            }}
+          />
+
+          <motion.div 
+            className="absolute top-24 left-4 w-3 h-12 bg-gradient-to-b from-white/10 to-transparent rounded-full"
+            animate={{ 
+              scaleY: [0.5, 1, 0.5],
+              opacity: [0.3, 0.7, 0.3]
+            }}
+            transition={{ 
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1.5
+            }}
+          />
+
+          <motion.div 
+            className="absolute top-8 right-4 w-12 h-3 bg-gradient-to-r from-white/10 to-transparent rounded-full"
+            animate={{ 
+              scaleX: [0.4, 1, 0.4],
+              opacity: [0.2, 0.6, 0.2]
+            }}
+            transition={{ 
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 0.7
+            }}
+          />
+
+          {/* Particle Effects */}
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-white/30 rounded-full"
+              style={{
+                left: `${20 + i * 15}%`,
+                top: `${8 + Math.sin(i) * 10}%`,
+              }}
+              animate={{
+                y: [0, -20, 0],
+                opacity: [0.2, 0.8, 0.2],
+                scale: [0.5, 1, 0.5],
+              }}
+              transition={{
+                duration: 2 + i * 0.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.4
+              }}
+            />
+          ))}
+
+          <motion.div 
+            className="text-center mb-2"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+          >
+            <motion.h2 
+              className="text-3xl font-bold text-white mb-3 bg-gradient-to-r from-white to-blue-200 bg-clip-text"
+              animate={{
+                backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            >
+              {isLogin ? "Welcome Back!" : "Join Our Community"}
+            </motion.h2>
+            <motion.p 
+              className="text-blue-100 text-base leading-relaxed"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+            >
+              {isLogin 
+                ? "Help improve your community by reporting civic issues" 
+                : "Report civic issues and track their resolution status"
+              }
+            </motion.p>
+          </motion.div>
+          
+          {/* Main illustration with enhanced animation and glow effect */}
+          <div className="relative w-full max-w-md flex items-center justify-center mb-2">
+            {/* Enhanced Glow Effect Behind SVG */}
+            <motion.div
+              className="absolute inset-6 bg-gradient-to-r from-blue-400/30 via-purple-500/20 to-blue-500/30 rounded-3xl blur-2xl"
+              animate={{
+                scale: [1, 1.08, 1],
+                opacity: [0.3, 0.6, 0.3],
+                rotate: [0, 2, -2, 0]
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            
+            {/* Secondary Glow Layer */}
+            <motion.div
+              className="absolute inset-10 bg-gradient-to-l from-purple-400/20 to-blue-400/20 rounded-2xl blur-xl"
+              animate={{
+                scale: [1.02, 1, 1.02],
+                opacity: [0.2, 0.5, 0.2],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1
+              }}
+            />
+            
+            {/* Main SVG Container with enhanced styling */}
+            <motion.div
+              className="relative z-10 w-full max-w-sm bg-white/15 backdrop-blur-md rounded-3xl p-4 border border-white/30 shadow-2xl"
+              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              animate={{ 
+                opacity: 1, 
+                scale: 1,
+                y: 0
+              }}
+              transition={{ 
+                duration: 0.8,
+                delay: 0.5,
+                type: "spring",
+                stiffness: 100
+              }}
+              whileHover={{
+                scale: 1.02,
+                y: -2,
+                transition: { duration: 0.3 }
+              }}
+            >
+              {/* Animated Border */}
+              <motion.div
+                className="absolute inset-0 rounded-3xl"
+                style={{
+                  background: "linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.3), transparent, rgba(139, 92, 246, 0.3), transparent)",
+                  backgroundSize: "400% 400%"
+                }}
+                animate={{
+                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+              
+              {/* Modern HTML Dashboard */}
+              <div className="relative w-full rounded-2xl overflow-hidden bg-gradient-to-br from-slate-50 to-blue-50 p-4">
+                
+                {/* Dashboard Header */}
+                <motion.div 
+                  className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl p-3 mb-3 text-white"
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <motion.div 
+                        className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center"
+                        animate={{ rotate: [0, 360] }}
+                        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                      >
+                        🏛️
+                      </motion.div>
+                      <h2 className="text-lg font-bold">Civic Dashboard</h2>
+                    </div>
+                    <motion.div 
+                      className="flex items-center space-x-2"
+                      animate={{ opacity: [0.7, 1, 0.7] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                      <span className="text-sm">Live</span>
+                    </motion.div>
+                  </div>
+                </motion.div>
+
+                {/* Stats Grid */}
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  {[
+                    { icon: "🚨", label: "Issues", value: "142", color: "from-orange-400 to-red-500", delay: 0.2 },
+                    { icon: "✅", label: "Resolved", value: "89", color: "from-green-400 to-emerald-500", delay: 0.3 },
+                    { icon: "🏢", label: "Departments", value: "12", color: "from-blue-400 to-indigo-500", delay: 0.4 },
+                    { icon: "⏱️", label: "Avg Response", value: "2.4h", color: "from-purple-400 to-pink-500", delay: 0.5 }
+                  ].map((stat, index) => (
+                    <motion.div
+                      key={index}
+                      className="bg-white rounded-lg p-2 shadow-sm border border-gray-100"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.5, delay: stat.delay }}
+                      whileHover={{ scale: 1.05, y: -2 }}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <motion.div 
+                          className={`w-8 h-8 bg-gradient-to-r ${stat.color} rounded-lg flex items-center justify-center text-white text-sm`}
+                          animate={{ 
+                            boxShadow: [
+                              "0 0 0 rgba(59, 130, 246, 0)",
+                              "0 0 15px rgba(59, 130, 246, 0.3)",
+                              "0 0 0 rgba(59, 130, 246, 0)"
+                            ]
+                          }}
+                          transition={{ duration: 2, repeat: Infinity, delay: stat.delay }}
+                        >
+                          {stat.icon}
+                        </motion.div>
+                        <motion.div 
+                          className="text-right"
+                          animate={{ opacity: [0.8, 1, 0.8] }}
+                          transition={{ duration: 1.5, repeat: Infinity, delay: stat.delay }}
+                        >
+                          <div className="text-lg font-bold text-gray-800">{stat.value}</div>
+                          <div className="text-xs text-gray-500">{stat.label}</div>
+                        </motion.div>
+                      </div>
+                      <motion.div 
+                        className={`h-1 bg-gradient-to-r ${stat.color} rounded-full`}
+                        initial={{ width: 0 }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: 1, delay: stat.delay + 0.5 }}
+                      />
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Department Cards */}
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  {[
+                    { icon: "💧", name: "Water Dept", issues: 24, color: "bg-blue-50 border-blue-200" },
+                    { icon: "🛣️", name: "Roads", issues: 18, color: "bg-green-50 border-green-200" },
+                    { icon: "🚨", name: "Safety", issues: 12, color: "bg-orange-50 border-orange-200" },
+                    { icon: "🌳", name: "Parks", issues: 8, color: "bg-emerald-50 border-emerald-200" }
+                  ].map((dept, index) => (
+                    <motion.div
+                      key={index}
+                      className={`${dept.color} rounded-lg p-2 border`}
+                      initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+                      whileHover={{ scale: 1.02 }}
+                    >
+                      <div className="flex items-center space-x-2">
+                        <motion.span 
+                          className="text-lg"
+                          animate={{ rotate: [0, 10, -10, 0] }}
+                          transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
+                        >
+                          {dept.icon}
+                        </motion.span>
+                        <div>
+                          <div className="text-xs font-medium text-gray-700">{dept.name}</div>
+                          <div className="text-xs text-gray-500">{dept.issues} issues</div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Progress Section */}
+                <motion.div 
+                  className="bg-white rounded-lg p-2 border border-gray-100"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 1 }}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-gray-700">📊 Today's Progress</span>
+                    <motion.span 
+                      className="text-sm text-blue-600 font-medium"
+                      animate={{ opacity: [0.7, 1, 0.7] }}
+                      transition={{ duration: 1, repeat: Infinity }}
+                    >
+                      75%
+                    </motion.span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <motion.div 
+                      className="bg-gradient-to-r from-blue-500 to-green-500 h-2 rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ width: "75%" }}
+                      transition={{ duration: 2, delay: 1.2, ease: "easeOut" }}
+                    />
+                  </div>
+                </motion.div>
+
+              </div>
+            </motion.div>
+          </div>
+          
+          {/* Enhanced interactive feature icons */}
+          <motion.div 
+            className="flex justify-center space-x-6 mt-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2 }}
+          >
+            {[
+              { icon: "🏙️", title: "Report Issues", color: "from-blue-400 to-blue-500" },
+              { icon: "🛣️", title: "Track Progress", color: "from-blue-500 to-blue-600" },
+              { icon: "💡", title: "Get Updates", color: "from-blue-600 to-blue-700" },
+              { icon: "🌳", title: "Improve Community", color: "from-blue-700 to-blue-800" }
+            ].map((item, index) => (
+              <motion.div 
+                key={index}
+                className="group flex flex-col items-center"
+                initial={{ opacity: 0, y: 50, scale: 0 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ 
+                  delay: 1.4 + index * 0.1,
+                  type: "spring",
+                  stiffness: 150
+                }}
+                whileHover={{ 
+                  y: -8
+                }}
+              >
+                <motion.div 
+                  className={`relative flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r ${item.color}`}
+                  animate={{
+                    y: [0, -3, 0],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: index * 0.3,
+                  }}
+                  whileHover={{ 
+                    scale: 1.1,
+                    boxShadow: "0 8px 25px rgba(59, 130, 246, 0.4)"
+                  }}
+                  whileTap={{ 
+                    scale: 0.95
+                  }}
+                >
+                  <span className="relative text-2xl z-10">{item.icon}</span>
+                </motion.div>
+                <motion.span 
+                  className="text-sm text-blue-100 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-100 font-medium text-center"
+                >
+                  {item.title}
+                </motion.span>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Floating connection lines */}
+          <motion.div
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 pointer-events-none opacity-20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.1 }}
+            transition={{ delay: 2 }}
+          >
+            <svg className="w-full h-full">
+              {[...Array(4)].map((_, i) => (
+                <motion.circle
+                  key={i}
+                  cx="50%"
+                  cy="50%"
+                  r={40 + i * 25}
+                  fill="none"
+                  stroke="rgba(255,255,255,0.1)"
+                  strokeWidth="1"
+                  strokeDasharray="8,8"
+                  animate={{
+                    strokeDashoffset: [0, 32],
+                  }}
+                  transition={{
+                    duration: 4 + i,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                />
+              ))}
+            </svg>
+          </motion.div>
+
+          {/* Simple Copyright - Bottom Right Corner */}
+          <motion.div 
+            className="absolute bottom-1 right-4 z-20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 3, duration: 1 }}
+          >
+            <motion.div 
+              className="text-right"
+              whileHover={{ scale: 1.05 }}
+            >
+            </motion.div>
+          </motion.div>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
